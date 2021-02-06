@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Django Blog App</title>
+</head>
+<body>
+
+	{% for article in articles %}
+		<a href="{% url 'single' article.id%}"><h2>{{article.title}}</h2></a>
+		<p>Posted in: {{article.category}}, Posted by: {{article.author}}</p>
+		<img src="{{article.image.url}}" alt="{{article.title}}">
+		<p>{{article.content}}</p>
+	{% endfor %}
+
+</body>
+</html>

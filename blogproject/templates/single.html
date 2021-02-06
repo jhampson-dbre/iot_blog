@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Django Blog Single Page</title>
+</head>
+<body>
+
+	<a href="{% url 'index' %}">...Go Back</a>
+
+	<h2>{{single.title}}</h2>
+	<p>Posted in: {{single.category}}, Posted by: {{single.author}}</p>
+	<img src="{{single.image.url}}" alt="{{single.title}}">
+	<p>{{single.content}}</p>
+
+</body>
+</html>
