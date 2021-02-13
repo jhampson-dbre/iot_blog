@@ -1,5 +1,5 @@
 FROM python:3
-RUN mkdir /usr/src/blogproject
+RUN mkdir -p /usr/src/blogproject
 WORKDIR /usr/src/blogproject
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONBUFFERED 1
