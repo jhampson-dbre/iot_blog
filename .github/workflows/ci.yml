@@ -1,0 +1,38 @@
+name: Django CI/CD Workflow
+
+# triggers for our workflow
+on:
+  # opening a pull request to master and develop branch will be a trigger
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# three job definition
+jobs:
+  package-job: # package job for building and publishing docker images
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }} # will be fired if the trigger event is a push event.
+    steps:
+      - name: Checkout Code # checking out code.
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+          registry: ghcr.io
+
+      - name: Build & Publish Image # we are using a public GitHub Action to build and publish docker image to our GCR registry.
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/iot_blog:latest
